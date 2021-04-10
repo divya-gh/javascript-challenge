@@ -19,7 +19,7 @@ function createUFOTable() {
     d3.event.preventDefault();
 
     //refresh table so that it populates new user search
-    d3.select('tbody').html("")
+    d3.select('tbody').html("");
 
     // Get user entered date-value from the inputField
     var inputValue = d3.select('.form-control').property('value') ;
@@ -39,21 +39,19 @@ function createUFOTable() {
     //create a row and assign object values in each cell(td)
     filteredData.forEach(ufoData_obj => {
         var tableRow = tableBody.append('tr') ;
-        
+
         // create td cell and insert ufo details into it
         Object.values(ufoData_obj).forEach(ufoObjValue => {
             var cell = tableRow.append('td') ;
             cell.text(ufoObjValue) ;
 
-        })
-    })
-
-
-
-
+        });
+    });
+//End of event handler function
 }
 
 
 //call the event handlers for above controls
+// call createUFOTable when user enters a date or form is submitted when user hits a enter key
 button.on('click', createUFOTable) ;
 formInput.on('submit' , createUFOTable) ;
