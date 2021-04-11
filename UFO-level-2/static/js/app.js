@@ -230,6 +230,8 @@ function filterUFOdata () {
     // create a row and insert data by calling createRowCell function
     CreateRowCell(filterdData , tableBody) ;    
 
+
+
 }
 
 //function to create a row and cell with data
@@ -244,6 +246,10 @@ function CreateRowCell(filterdData , tableBody) {
         tableRow.append('td').text(ufoObjValue) ;        
         });
     });
+    tableBody.append('br') * 3 ;
+    nextRow = tableBody.append('tr') ;
+    nextRow.append('td').text(`Total UFO Sighting:`).attr('rowspan' , '3') ;
+    nextRow.append('td').text(filterdData.length)
 }
 
 
