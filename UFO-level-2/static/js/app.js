@@ -18,7 +18,9 @@ function filterUFOdata () {
     // Prevent the page from refreshing
     d3.event.preventDefault();
     
-    // get user input values to filter data  
+    // get user input for following fields
+    //-----------------------------------//
+    //get datetime value
     var datetime = d3.select('#datetime').property('value') ;
 
     //get city value 
@@ -34,73 +36,64 @@ function filterUFOdata () {
     var shape = d3.select('#shape').property('value') ;
     
     
-    //Filter data based on the user input
-    if(datetime !== "" && city =="" && state == "") {
+    //Filter by date 
+    if(datetime !== "" && city =="" && state == "" && country == "" && shape == "") {
        var filteredByDate = tableData.filter( ufoObj => ufoObj.datetime === datetime) ;
        var filterdData = filteredByDate ; 
-      
-        //print to console
-        console.log('datetime:' , datetime) ;
-        console.log('data:' , filterdData) ;
         }
-    // filter data by city on filterdby date table
-    else if(datetime != "" && city != "") {
+    
+    // filter by date and city
+    else if(datetime != "" && city != "" && state == "" && country == "" && shape == "") {
         var filteredByDate = tableData.filter( ufoObj => ufoObj.datetime === datetime) ;
         var filteredByDatecity = filteredByDate.filter( ufoObj => ufoObj.city === city) ;
         filterdData = filteredByDatecity ;
-
-        //print to console
-        console.log('datetime and city:' , datetime , city) ;
-        console.log('data:' , filterdData) ;
         }
-    // Render table by city of date not provided
-    else if (city != "" && datetime == ""){
+    // Filter by just city
+    else if (city != "" && datetime == "" && state == "" && country == "" && shape == ""){
         var filteredBycity = tableData.filter( ufoObj => ufoObj.city === city) ;
         filterdData = filteredBycity ;  
-        
-        //print to console
-        console.log('city:' , city) ;
-        console.log('data:' , filterdData) ; 
     }
 
-    // filter data by state on filterdby date table when city not given
-    else if(datetime != "" && city == "" && state != "") {
+    // filter by date and state
+    else if(datetime != "" && city == "" && state != "" && country == "" && shape == "") {
         var filteredByDate = tableData.filter( ufoObj => ufoObj.datetime === datetime) ;
-        var filteredBycity = filteredByDate.filter( ufoObj => ufoObj.state === state) ;
-        filterdData = filteredBycity ;
-
-        //print to console
-        console.log('datetime and state:' , datetime , state) ;
-        console.log('data:' , filterdData) ;
+        var filteredByDateState = filteredByDate.filter( ufoObj => ufoObj.state === state) ;
+        filterdData = filteredByDateState ;
         }
-    // Render table by state on  of date not provided
-    else if (state != "" && city != "" && datetime == ""){
+    // filter by date, city and state
+    else if(datetime != "" && city != "" && state != "" && country == "" && shape == "") {
+        var filteredByDate = tableData.filter( ufoObj => ufoObj.datetime === datetime) ;
+        var filteredBycity = filteredByDate.filter( ufoObj => ufoObj.city === city) ;
+        var filteredByDateCityState = filteredBycity.filter( ufoObj => ufoObj.state === state) ;
+        filterdData = filteredByDateCityState ;
+        }
+    // Filter by city and state
+    else if (state != "" && city != "" && datetime == "" && country == "" && shape == ""){
         var filteredByCityState = filteredBycity.filter( ufoObj => ufoObj.state === state) ;
         filterdData = filteredByCityState ;  
-        
-        //print to console
-        console.log('date and city and state:' , date, city, state) ;
-        console.log('data:' , filterdData) ; 
     }
-    // Render table by date and city not provided
-    else if (state != "" && city == "" && datetime == ""){
+    // Filter by state
+    else if (state != "" && city == "" && datetime == "" && country == "" && shape == ""){
         var filteredByState = tableData.filter( ufoObj => ufoObj.state === state) ;
         filterdData = filteredByState ;  
-        
-        //print to console
-        console.log('state:' , state) ;
-        console.log('data:' , filterdData) ; 
     }
     //Render table by date,city,state and country
-       else if (datetime != "" && city != "" && state != "" && country != ""){
+       else if (datetime != "" && city != "" && state != "" && country != "" && shape == ""){
         var filteredByDate = tableData.filter( ufoObj => ufoObj.datetime === datetime) ;
         var filteredByDatecity = filteredByDate.filter( ufoObj => ufoObj.city === city) ;
         var filteredByDatecityState = filteredByDatecity.filter( ufoObj => ufoObj.state === state) 
         var filteredByDatecityStateCountry = filteredByDatecityState.filter( ufoObj => ufoObj.country === country)
         filterdData = filteredByDatecityStateCountry ;  
     }
+    //Render table by date,city and country
+    else if (datetime != "" && city != "" && state == "" && country != "" && shape == ""){
+        var filteredByDate = tableData.filter( ufoObj => ufoObj.datetime === datetime) ;
+        var filteredByDatecity = filteredByDate.filter( ufoObj => ufoObj.city === city) ;
+        var filteredByDatecityCountry = filteredByDatecity.filter( ufoObj => ufoObj.country === country)
+        filterdData = filteredByDatecityCountry ;  
+    }
     //Render table by city,state and country
-    else if (datetime == "" && city != "" && state != "" && country != ""){
+    else if (datetime == "" && city != "" && state != "" && country != "" && shape ==""){
         var filteredBycity = tableData.filter( ufoObj => ufoObj.city === city) ;
         var filteredBycityState = filteredBycity.filter( ufoObj => ufoObj.state === state) 
         var filteredBycityStateCountry = filteredBycityState.filter( ufoObj => ufoObj.country === country)
@@ -108,24 +101,24 @@ function filterUFOdata () {
     }
 
     //Render table by state and country
-    else if (datetime == "" && city == "" && state != "" && country != ""){
+    else if (datetime == "" && city == "" && state != "" && country != "" && shape ==""){
         var filteredByState = tableData.filter( ufoObj => ufoObj.state === state) 
         var filteredByStateCountry = filteredByState.filter( ufoObj => ufoObj.country === country)
         filterdData = filteredByStateCountry ;  
         }
     //Render table by country
-    else if (datetime == "" && city == "" && state == "" && country != ""){
+    else if (datetime == "" && city == "" && state == "" && country != "" && shape == ""){
     var filteredByCountry = tableData.filter( ufoObj => ufoObj.country === country)
     filterdData = filteredByCountry ;  
     }
     //Render table by date and country
-    else if (datetime != "" && city == "" && state == "" && country != ""){
+    else if (datetime != "" && city == "" && state == "" && country != "" && shape == ""){
         var filteredByDate = tableData.filter( ufoObj => ufoObj.datetime === datetime) ;
         var filteredByDateCountry = filteredByDate.filter( ufoObj => ufoObj.country === country);
         filterdData = filteredByDateCountry ;  
         }
     //Render table by date ,state and country
-    else if (datetime != "" && city == "" && state != "" && country != ""){
+    else if (datetime != "" && city == "" && state != "" && country != "" && shape == ""){
         var filteredByDate = tableData.filter( ufoObj => ufoObj.datetime === datetime) ;
         var filteredByDateState = filteredByDate.filter( ufoObj => ufoObj.state === state)
         var filteredByDateStateCountry = filteredByDateState.filter( ufoObj => ufoObj.country === country);
@@ -139,6 +132,21 @@ function filterUFOdata () {
         var filteredByDatecityStateCountry = filteredByDatecityState.filter( ufoObj => ufoObj.country === country);
         var filteredByDatecityStateCountryShape = filteredByDatecityStateCountry.filter( ufoObj => ufoObj.shape === shape);
         filterdData = filteredByDatecityStateCountryShape ;  
+    }
+    //Render table by date, city and shape
+    else if (datetime != "" && city != "" && state == "" && country == "" && shape != ""){
+        var filteredByDate = tableData.filter( ufoObj => ufoObj.datetime === datetime) ;
+        var filteredByDatecity = filteredByDate.filter( ufoObj => ufoObj.city === city) ;
+        var filteredByDatecityShape = filteredByDatecity.filter( ufoObj => ufoObj.shape === shape);
+        filterdData = filteredByDatecityShape ;  
+    }
+    //Render table by date, city, country and shape
+    else if (datetime != "" && city != "" && state == "" && country != "" && shape != ""){
+     var filteredByDate = tableData.filter( ufoObj => ufoObj.datetime === datetime) ;
+     var filteredByDatecity = filteredByDate.filter( ufoObj => ufoObj.city === city) ;
+     var filteredByDatecityCountry = filteredByDatecity.filter( ufoObj => ufoObj.country === country);
+     var filteredByDatecityCountryShape = filteredByDatecityCountry.filter( ufoObj => ufoObj.shape === shape);
+     filterdData = filteredByDatecityCountryShape ;  
     }
     //Render table by date, state, country and shape
     else if (datetime != "" && city == "" && state != "" && country != "" && shape != ""){
@@ -155,12 +163,20 @@ function filterUFOdata () {
         var filteredByDateCountryShape = filteredByDateCountry.filter( ufoObj => ufoObj.shape === shape) ;
         filterdData = filteredByDateCountryShape ;  
     }
+    
     //Render table by date and shape
     else if (datetime != "" && city == "" && state == "" && country == "" && shape != ""){
         var filteredByDate = tableData.filter( ufoObj => ufoObj.datetime === datetime) ;
         var filteredByDateShape = filteredByDate.filter( ufoObj => ufoObj.shape === shape) ;
         filterdData = filteredByDateShape ;
     }
+    //Render table by date, state and shape
+    else if (datetime != "" && city == "" && state != "" && country == "" && shape != ""){
+        var filteredByDate = tableData.filter( ufoObj => ufoObj.datetime === datetime) ;
+        var filteredByDateState = filteredByDate.filter( ufoObj => ufoObj.state === state) 
+        var filteredByDateStateShape = filteredByDateState.filter( ufoObj => ufoObj.shape === shape) ;
+        filterdData = filteredByDateStateShape ;
+        }
     //Render table by city,state, country and shape
     else if (datetime == "" && city != "" && state != "" && country != "" && shape != ""){
         var filteredBycity = tableData.filter( ufoObj => ufoObj.city === city) ;
@@ -177,6 +193,12 @@ function filterUFOdata () {
         var filteredByStateCountryShape = filteredByStateCountry.filter( ufoObj => ufoObj.shape === shape) ;
         filterdData = filteredByStateCountryShape ;  
         }
+    //Render table by state and shape
+    else if (datetime == "" && city == "" && state != "" && country == "" && shape != ""){
+        var filteredByState = tableData.filter( ufoObj => ufoObj.state === state) ;
+        var filteredByStateShape = filteredByState.filter( ufoObj => ufoObj.shape === shape) ;
+        filterdData = filteredByStateShape ;  
+        }
     //Render table by country and shape
     else if (datetime == "" && city == "" && state == "" && country != "" && shape != ""){
         var filteredByCountry = tableData.filter( ufoObj => ufoObj.country === country) ;
@@ -188,7 +210,16 @@ function filterUFOdata () {
         var filteredByShape = tableData.filter( ufoObj => ufoObj.shape === shape) ;
         filterdData = filteredByShape ;  
         }
-    
+    //Render table by city and shape
+    else if (datetime == "" && city != "" && state == "" && country == "" && shape != ""){
+        var filteredBycity = tableData.filter( ufoObj => ufoObj.city === city) ;
+        var filteredByCityShape = filteredBycity.filter( ufoObj => ufoObj.shape === shape) ;
+        filterdData = filteredByCityShape ;  
+         }
+    //Filter data based on the user input
+    if(datetime == "" && city =="" && state == "" && country == "" && shape == "") {
+        var filterdData = [] ; 
+         }
 
 
     // render the table based on the selection
