@@ -69,6 +69,7 @@ function filterUFOdata () {
         }
     // Filter by city and state
     else if (state != "" && city != "" && datetime == "" && country == "" && shape == ""){
+        var filteredBycity = tableData.filter( ufoObj => ufoObj.city === city) ;
         var filteredByCityState = filteredBycity.filter( ufoObj => ufoObj.state === state) ;
         filterdData = filteredByCityState ;  
     }
@@ -247,9 +248,9 @@ function CreateRowCell(filterdData , tableBody) {
         });
     });
     tableBody.append('br') ;
-    nextRow = tableBody.append('tr').attr('class' , 'text-center bg-secondary h4') ;
+    nextRow = tableBody.append('tr').attr('class' , 'text-center bg-info h4') ;
     nextRow.append('td').attr('colspan' , '5').text(`Total UFO Sightings :`) ;
-    nextRow.append('td').attr('colspan' , '1').attr('class' , 'text-left').text(filterdData.length)
+    nextRow.append('td').attr('colspan' , '1').attr('class' , 'text-left').text(filterdData.length) ;
 }
 
 
