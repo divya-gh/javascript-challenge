@@ -246,10 +246,10 @@ function CreateRowCell(filterdData , tableBody) {
         tableRow.append('td').text(ufoObjValue) ;        
         });
     });
-    tableBody.append('br') * 3 ;
-    nextRow = tableBody.append('tr') ;
-    nextRow.append('td').text(`Total UFO Sighting:`).attr('rowspan' , '3') ;
-    nextRow.append('td').text(filterdData.length)
+    tableBody.append('br') ;
+    nextRow = tableBody.append('tr').attr('class' , 'text-center bg-secondary h4') ;
+    nextRow.append('td').attr('colspan' , '5').text(`Total UFO Sightings :`) ;
+    nextRow.append('td').attr('colspan' , '1').attr('class' , 'text-left').text(filterdData.length)
 }
 
 
